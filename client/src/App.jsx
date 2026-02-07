@@ -1,8 +1,13 @@
+import { Outlet } from "react-router"
+
 function App() {
     return(
-        <h2 className="text-lg">
-            Tester
-        </h2>
+        <div>
+            <h2 className="text-lg">
+                Tester
+            </h2>
+            <Outlet />
+        </div>
     )
 }
 
