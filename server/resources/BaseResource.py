@@ -6,6 +6,10 @@ from config import db
 class BaseResource(Resource):
     model = None 
 
+    # Used for sending emails to new users
+    def after_create(self, instance):
+        pass
+
     # GET ALL INSTANCES OF MODEL
     def get_all(self):
         records = [record.to_dict() for record in self.model.query.all()]
@@ -28,12 +32,20 @@ class BaseResource(Resource):
         
         mapped_data = {}
         for key, value in data.items():
-            mapped_key = self.field_map.get(key, key)
+            mapped_key = getattr(self, "field_map", {}).get(key, key)
             mapped_data[mapped_key] = value
         try:
             new_record = self.model(**mapped_data)
             db.session.add(new_record)
+
+            # Email sending happens after commit
+            db.session.add(new_record)
+            db.session.flush() # assigns ID, no commit yet
+
+            self.after_create(new_record)
+
             db.session.commit()
+
             return new_record.to_dict(), 201
         except ValueError as e:
             db.session.rollback()
