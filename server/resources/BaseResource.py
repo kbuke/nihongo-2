@@ -36,7 +36,7 @@ class BaseResource(Resource):
             mapped_data[mapped_key] = value
         try:
             new_record = self.model(**mapped_data)
-            db.session.add(new_record)
+            # db.session.add(new_record)
 
             # Email sending happens after commit
             db.session.add(new_record)
