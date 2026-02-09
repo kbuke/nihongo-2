@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 
 import App from "./App";
 import VerificationPage from "./Pages/VerificationPage/VerificationPage";
-import { HomePg } from "./Pages/HomePg";
+import { NoSignInHome } from "./Pages/NoSignInHome/NoSignInHome";
 
 export const router = createBrowserRouter([
     {
@@ -12,7 +12,7 @@ export const router = createBrowserRouter([
             // Create object with path and element keys 
             {
                 index: true,
-                element: <HomePg />
+                element: <NoSignInHome />
             },
 
             {
